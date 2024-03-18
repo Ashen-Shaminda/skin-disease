@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="skin_diseases_detection_system"
+        android:label="Skin Disease System"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
