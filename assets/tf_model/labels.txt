@@ -1,0 +1,6 @@
+0 Acne and Rosacea
+1 Eczema
+2 Normal
+3 Psoriasis
+4 vitiligo
+5 Melanoma Skin Cancer Nevi and Moles
