@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "122134295858",
+    "project_id": "skin-diseases-detection-cefb1",
+    "storage_bucket": "skin-diseases-detection-cefb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122134295858:android:c74e76d9bd41c7ec62532b",
+        "android_client_info": {
+          "package_name": "com.example.skin_diseases_detection_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc9Rafu3umJkXapjC63FELkqcR4Ty9QP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
