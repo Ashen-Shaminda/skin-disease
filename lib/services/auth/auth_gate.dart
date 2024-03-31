@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:skin_diseases_detection_system/home.dart';
 
 import '../../pages/home_page.dart';
 import 'login_register.dart';
@@ -15,7 +16,7 @@ class AuthGate extends StatelessWidget {
         builder: (context, snapshot) {
 // user is logged in
           if (snapshot.hasData) {
-            return HomePage();
+            return const Home();
           }
 // user is NOT logged in
           else {
