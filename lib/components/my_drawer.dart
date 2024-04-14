@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:skin_diseases_detection_system/home.dart';
+import 'package:skin_diseases_detection_system/pages/home_page.dart';
+import 'package:skin_diseases_detection_system/pages/profile_page.dart';
 
 import '../pages/settings_page.dart';
 import '../services/auth/auth_service.dart';
@@ -19,12 +22,12 @@ class MyDrawer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(children: [
-            DrawerHeader(
+            const DrawerHeader(
               child: Center(
-                child: Icon(
-                  Icons.message,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 40,
+                child: Image(
+                  image: AssetImage("assets/images/hand.png"),
+                  width: 95,
+                  alignment: Alignment.center,
                 ),
               ),
             ),
@@ -34,9 +37,29 @@ class MyDrawer extends StatelessWidget {
                 title: const Text("H O M E"),
                 leading: const Icon(Icons.home),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Home(),
+                    ),
+                  );
                 },
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25.0),
+              child: ListTile(
+                  title: const Text("P R O F I L E"),
+                  leading: const Icon(Icons.account_circle_rounded),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfilePage(),
+                      ),
+                    );
+                  }),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 25.0),
@@ -52,7 +75,22 @@ class MyDrawer extends StatelessWidget {
                       ),
                     );
                   }),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25.0),
+              child: ListTile(
+                  title: const Text("C H A T"),
+                  leading: const Icon(Icons.chat),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                    );
+                  }),
+            ),
           ]),
           Padding(
             padding: const EdgeInsets.only(left: 25.0, bottom: 25),

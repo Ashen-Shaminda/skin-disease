@@ -1,15 +1,9 @@
-# skin_diseases_detection_system
+# Skin Diseases Detection System
 
-A new Flutter project.
+Skin Disease Detection system using Tenser-flow lite and Flutter.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,

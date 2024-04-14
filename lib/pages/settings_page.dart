@@ -33,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Dark Mode"),
+            const Text("Dark Mode"),
             CupertinoSwitch(
                 value: Provider.of<ThemeProvider>(context, listen: false)
                     .isDarkMode,

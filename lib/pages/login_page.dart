@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:skin_diseases_detection_system/pages/home_page.dart';
 
 import '../components/my_button.dart';
 import '../components/my_textfield.dart';
@@ -24,28 +25,29 @@ class LoginPage extends StatelessWidget {
 // catch any errors
     catch (e) {
       showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text(e.toString()),
-              ));
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
+        ),
+      );
     }
   }
 
   LoginPage({super.key, required this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(
-            Icons.message,
-            size: 60,
-            color: Theme.of(context).colorScheme.primary,
+          Image.asset(
+            "assets/images/hand.png",
+            scale: 4,
           ),
           const SizedBox(height: 50),
           Text(
-            "Welcome back, you've been missed!",
+            "Skin Diseases Detector",
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
               fontSize: 16,
@@ -71,6 +73,8 @@ class LoginPage extends StatelessWidget {
           MyButton(
             text: 'Login',
             onTap: () => login(context),
+            padding: 25,
+            margin: 25,
           ),
           const SizedBox(
             height: 20,
@@ -91,7 +95,22 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-          ])
+          ]),
+          SizedBox(
+            height: 30,
+          ),
+          // TODO: Has to fix this button functionality.
+          MyButton(
+            text: 'Continue without login.',
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            ),
+            padding: 10,
+            margin: 65,
+          ),
         ]),
       ),
     );

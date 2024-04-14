@@ -1,9 +1,11 @@
+import 'package:skin_diseases_detection_system/components/popup_menu.dart';
+
 import '../components/my_drawer.dart';
+import '../components/user_tile.dart';
 import '../services/auth/auth_service.dart';
 import '../services/chat/chat_service.dart';
 import 'package:flutter/material.dart';
 
-import '../components/user_tile.dart';
 import 'chat_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -23,6 +25,9 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.grey,
         elevation: 0,
+        actions: const [
+          PopMenu(),
+        ],
       ),
       drawer: const MyDrawer(),
       body: _buildUserList(),

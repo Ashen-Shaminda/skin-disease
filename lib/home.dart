@@ -4,6 +4,9 @@ import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:developer' as devtools;
 
+import 'package:skin_diseases_detection_system/components/my_drawer.dart';
+import 'package:skin_diseases_detection_system/components/popup_menu.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -21,9 +24,10 @@ class _HomeState extends State<Home> {
     String? res = await Tflite.loadModel(
         model: "assets/model_unquant.tflite",
         labels: "assets/labels.txt",
-        numThreads: 1, // defaults to 1
-        isAsset:
-            true, // defaults to true, set to false to load resources outside assets
+        numThreads: 1,
+        // defaults to 1
+        isAsset: true,
+        // defaults to true, set to false to load resources outside assets
         useGpuDelegate:
             false // defaults to false, set to true to use GPU delegate
         );
@@ -45,11 +49,16 @@ class _HomeState extends State<Home> {
     });
 
     var recognitions = await Tflite.runModelOnImage(
-        path: image.path, // required
-        imageMean: 0.0, // defaults to 117.0
-        imageStd: 255.0, // defaults to 1.0
-        numResults: 2, // defaults to 5
-        threshold: 0.2, // defaults to 0.1
+        path: image.path,
+        // required
+        imageMean: 0.0,
+        // defaults to 117.0
+        imageStd: 255.0,
+        // defaults to 1.0
+        numResults: 2,
+        // defaults to 5
+        threshold: 0.2,
+        // defaults to 0.1
         asynch: true // defaults to true
         );
 
@@ -78,11 +87,16 @@ class _HomeState extends State<Home> {
     });
 
     var recognitions = await Tflite.runModelOnImage(
-        path: image.path, // required
-        imageMean: 0.0, // defaults to 117.0
-        imageStd: 255.0, // defaults to 1.0
-        numResults: 2, // defaults to 5
-        threshold: 0.2, // defaults to 0.1
+        path: image.path,
+        // required
+        imageMean: 0.0,
+        // defaults to 117.0
+        imageStd: 255.0,
+        // defaults to 1.0
+        numResults: 2,
+        // defaults to 5
+        threshold: 0.2,
+        // defaults to 0.1
         asynch: true // defaults to true
         );
 
@@ -116,16 +130,21 @@ class _HomeState extends State<Home> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(187, 165, 104, 212),
           title: const Center(
-              child: Text(
-            "Skin Disease Detection",
-            style: TextStyle(fontWeight: FontWeight.w500),
-          )),
+            child: Text(
+              "Skin Disease Detection",
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.grey,
+          elevation: 0,
+          actions: const [PopMenu()],
         ),
         body: SingleChildScrollView(
           child: home(),
         ),
+        drawer: const MyDrawer(),
       ),
     );
   }
@@ -157,7 +176,7 @@ class _HomeState extends State<Home> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
                         image: const DecorationImage(
-                          image: AssetImage('assets/upload.jpg'),
+                          image: AssetImage('assets/images/upload.jpg'),
                         ),
                       ),
                       child: filePath == null

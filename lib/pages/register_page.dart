@@ -13,10 +13,8 @@ class RegisterPage extends StatelessWidget {
 
   RegisterPage({super.key, required this.onTap});
 
-  final _auth = AuthService();
-
   void register(BuildContext context) {
-    final auth = AuthService();
+    final _auth = AuthService();
     if (_passwordController.text == _confirmPasswordController.text) {
       try {
         _auth.signUpWithEmailPassword(
@@ -80,6 +78,8 @@ class RegisterPage extends StatelessWidget {
           MyButton(
             text: 'Register',
             onTap: () => {register(context)},
+            padding: 25,
+            margin: 25,
           ),
           const SizedBox(
             height: 20,

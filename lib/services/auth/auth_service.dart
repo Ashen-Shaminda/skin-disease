@@ -28,6 +28,7 @@ class AuthService {
     }
   }
 
+  // signup
   Future<UserCredential> signUpWithEmailPassword(String email, password) async {
     try {
       UserCredential userCredential =
