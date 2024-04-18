@@ -1,19 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:skin_diseases_detection_system/components/radio_list.dart';
 import '../components/my_button.dart';
 import '../components/my_textfield.dart';
 import '../services/auth/auth_service.dart';
 
-class RegisterPage extends StatelessWidget {
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-
+class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
 
   RegisterPage({super.key, required this.onTap});
 
-  void register(BuildContext context) {
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  String? _selectedRole;
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  Future<void> register(BuildContext context) async {
     final _auth = AuthService();
     if (_passwordController.text == _confirmPasswordController.text) {
       try {
@@ -21,6 +32,11 @@ class RegisterPage extends StatelessWidget {
           _emailController.text,
           _passwordController.text,
         );
+
+        await FirebaseFirestore.instance.collection('roles').doc(_auth.getCurrentUser()?.uid).set({
+          'role': _selectedRole,
+          'email': _emailController.text.trim(),
+        });
       } catch (e) {
         showDialog(
           context: context,
@@ -50,7 +66,28 @@ class RegisterPage extends StatelessWidget {
             size: 60,
             color: Theme.of(context).colorScheme.primary,
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 30),
+          RadioListTile<String>(
+            title: const Text('User'),
+            value: 'user',
+            groupValue: _selectedRole,
+            onChanged: (String? value) {
+              setState(() {
+                _selectedRole = value;
+              });
+            },
+          ),
+          RadioListTile<String>(
+            title: const Text('Doctor'),
+            value: 'doctor',
+            groupValue: _selectedRole,
+            onChanged: (String? value) {
+              setState(() {
+                _selectedRole = value;
+              });
+            },
+          ),
+          const SizedBox(height: 25),
           MyTextField(
             hintText: "Email",
             obscureText: false,
@@ -91,7 +128,7 @@ class RegisterPage extends StatelessWidget {
               style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
             GestureDetector(
-              onTap: onTap,
+              onTap: widget.onTap,
               child: Text(
                 " Login",
                 style: TextStyle(
