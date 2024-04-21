@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
           PopMenu(),
         ],
       ),
-      drawer: const MyDrawer(),
+      drawer: MyDrawer(),
       body: _buildUserList(),
     );
   }

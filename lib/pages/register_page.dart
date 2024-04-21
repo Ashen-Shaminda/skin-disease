@@ -17,6 +17,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   String? _selectedRole;
 
+  final TextEditingController _nameController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
   final TextEditingController _emailController = TextEditingController();
@@ -24,19 +26,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  final Timestamp timestamp = Timestamp.now();
+
   Future<void> register(BuildContext context) async {
     final _auth = AuthService();
     if (_passwordController.text == _confirmPasswordController.text) {
       try {
-        _auth.signUpWithEmailPassword(
-          _emailController.text,
-          _passwordController.text,
-        );
-
-        await FirebaseFirestore.instance.collection('roles').doc(_auth.getCurrentUser()?.uid).set({
-          'role': _selectedRole,
-          'email': _emailController.text.trim(),
-        });
+        _auth.signUpWithEmailPassword(_emailController.text,
+            _passwordController.text, _selectedRole, _nameController.text, timestamp);
       } catch (e) {
         showDialog(
           context: context,
@@ -61,12 +58,12 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(
-            Icons.message,
-            size: 60,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          const SizedBox(height: 30),
+          // Icon(
+          //   Icons.message,
+          //   size: 20,
+          //   color: Theme.of(context).colorScheme.primary,
+          // ),
+          const SizedBox(height: 15),
           RadioListTile<String>(
             title: const Text('User'),
             value: 'user',
@@ -88,6 +85,12 @@ class _RegisterPageState extends State<RegisterPage> {
             },
           ),
           const SizedBox(height: 25),
+          MyTextField(
+            hintText: "Name",
+            obscureText: false,
+            controller: _nameController,
+          ),
+          const SizedBox(height: 10),
           MyTextField(
             hintText: "Email",
             obscureText: false,

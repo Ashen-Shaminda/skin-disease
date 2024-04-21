@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:skin_diseases_detection_system/components/current_user.dart';
 import 'package:skin_diseases_detection_system/home.dart';
 import 'package:skin_diseases_detection_system/pages/home_page.dart';
 import 'package:skin_diseases_detection_system/pages/profile_page.dart';
@@ -7,7 +9,7 @@ import '../pages/settings_page.dart';
 import '../services/auth/auth_service.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
+  MyDrawer({super.key});
 
   void logout() {
     final authService = AuthService();
@@ -22,12 +24,17 @@ class MyDrawer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(children: [
-            const DrawerHeader(
+            DrawerHeader(
               child: Center(
-                child: Image(
-                  image: AssetImage("assets/images/hand.png"),
-                  width: 95,
-                  alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    const Image(
+                      image: AssetImage("assets/images/hand.png"),
+                      width: 95,
+                      alignment: Alignment.center,
+                    ),
+                    CurrentUser(),
+                  ],
                 ),
               ),
             ),
