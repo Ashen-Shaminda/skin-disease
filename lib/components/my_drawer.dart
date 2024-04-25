@@ -30,9 +30,10 @@ class MyDrawer extends StatelessWidget {
                   children: [
                     const Image(
                       image: AssetImage("assets/images/hand.png"),
-                      width: 95,
+                      width: 80,
                       alignment: Alignment.center,
                     ),
+                    SizedBox(height: 20,),
                     CurrentUser(),
                   ],
                 ),

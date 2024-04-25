@@ -19,12 +19,6 @@ class _CurrentUserState extends State<CurrentUser> {
   final _auth = AuthService();
   Map<String, dynamic>? _userData;
 
-  void initState() {
-    super.initState();
-    _user = _auth.getCurrentUser()!;
-    _getUserData();
-  }
-
   Future<void> _getUserData() async {
     try {
       DocumentSnapshot userDoc =
@@ -42,13 +36,20 @@ class _CurrentUserState extends State<CurrentUser> {
     }
   }
 
+  void initState() {
+    super.initState();
+    _user = _auth.getCurrentUser()!;
+    _getUserData();
+  }
+
+  void dispose() {
+    super.dispose();
+  }
+
   // final _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(_userName),
-      subtitle: Text(_userEmail),
-    );
+    return Column(children: [Text(_userName)]);
   }
 }

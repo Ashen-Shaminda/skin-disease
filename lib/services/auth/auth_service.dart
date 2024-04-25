@@ -1,5 +1,6 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import "package:google_sign_in/google_sign_in.dart";
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -52,6 +53,44 @@ class AuthService {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
+    }
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    Timestamp timeStamp = Timestamp.now();
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+      // Sign in to Firebase with the Google credential
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // Extract the UID from the UserCredential
+      String uid = userCredential.user!.uid;
+
+      _firestore.collection('roles').doc(uid).set({
+        'uid': uid,
+        'email': googleUser.email,
+        'time': timeStamp,
+      });
+
+      _firestore.collection('Users').doc(uid).set(
+          {'uid': userCredential.user!.uid, 'email': googleUser.email, 'time': timeStamp});
+
+      print(googleUser.email);
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      throw FirebaseAuthException(
+        message: 'Failed to sign in with Google: $e',
+        code: 'google_signin_failed',
+      );
     }
   }
 

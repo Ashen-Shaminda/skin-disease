@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:skin_diseases_detection_system/pages/home_page.dart';
 
 import '../components/my_button.dart';
@@ -45,7 +48,7 @@ class LoginPage extends StatelessWidget {
             "assets/images/hand.png",
             scale: 4,
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 20),
           Text(
             "Skin Diseases Detector",
             style: TextStyle(
@@ -79,6 +82,33 @@ class LoginPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
+          Divider(
+            thickness: 0.5,
+            indent: 50,
+            endIndent: 50,
+          ),
+          Text(
+            "Or continue with",
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          SignInButton(
+            Buttons.Google,
+            onPressed: () {
+              try {
+                AuthService().signInWithGoogle();
+              } catch (e) {
+                SnackBar(
+                  content: Text('$e'),
+                );
+              }
+            },
+          ),
+          SizedBox(
+            height: 10,
+          ),
           // ignore: duplicate_ignore
           // ignore: prefer_const_constructors
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -96,21 +126,6 @@ class LoginPage extends StatelessWidget {
               ),
             ),
           ]),
-          SizedBox(
-            height: 30,
-          ),
-          // TODO: Has to fix this button functionality.
-          MyButton(
-            text: 'Continue without login.',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomePage(),
-              ),
-            ),
-            padding: 10,
-            margin: 65,
-          ),
         ]),
       ),
     );
