@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../services/auth/auth_service.dart';
 
 class CurrentUser extends StatefulWidget {
-  CurrentUser({super.key});
+  const CurrentUser({super.key});
 
   @override
   State<CurrentUser> createState() => _CurrentUserState();
@@ -29,13 +29,14 @@ class _CurrentUserState extends State<CurrentUser> {
           _userEmail = userDoc['email'];
         });
       } else {
-        print('User document does not exist');
+        print('Roles document does not exist');
       }
     } catch (e) {
       print('Error getting user name: $e');
     }
   }
 
+  @override
   void initState() {
     super.initState();
     _user = _auth.getCurrentUser()!;
@@ -50,6 +51,6 @@ class _CurrentUserState extends State<CurrentUser> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [Text(_userName)]);
+    return Column(children: [_userName == null ? const CircularProgressIndicator() : Text(_userName)]);
   }
 }

@@ -24,16 +24,18 @@ class MyDrawer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(children: [
-            DrawerHeader(
+            const DrawerHeader(
               child: Center(
                 child: Column(
                   children: [
-                    const Image(
+                    Image(
                       image: AssetImage("assets/images/hand.png"),
                       width: 80,
                       alignment: Alignment.center,
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     CurrentUser(),
                   ],
                 ),
@@ -79,7 +81,7 @@ class MyDrawer extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SettingsPage(),
+                        builder: (context) => SettingsPage(),
                       ),
                     );
                   }),

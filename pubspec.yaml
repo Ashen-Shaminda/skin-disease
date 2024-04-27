@@ -29,6 +29,7 @@ dependencies:
   flutter_localization: ^0.2.0
   google_sign_in: ^6.2.1
   flutter_signin_button: ^2.0.0
+  firebase_storage: ^11.7.4
 
 dev_dependencies:
   flutter_test:

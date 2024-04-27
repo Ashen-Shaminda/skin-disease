@@ -4,8 +4,6 @@ import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:developer' as devtools;
 
-import 'package:skin_diseases_detection_system/components/my_drawer.dart';
-import 'package:skin_diseases_detection_system/components/popup_menu.dart';
 import 'package:skin_diseases_detection_system/services/user_data_service.dart';
 
 class ModelPage extends StatefulWidget {
@@ -110,6 +108,7 @@ class _ModelPageState extends State<ModelPage> {
     setState(() {
       confidence = (recognitions[0]['confidence'] * 100);
       label = recognitions[0]['label'].toString();
+      UserDataService(confidence: confidence, label: label).saveUserData();
     });
   }
 
@@ -129,27 +128,6 @@ class _ModelPageState extends State<ModelPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text(
-            "Skin Disease Detection",
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.grey,
-        elevation: 0,
-        actions: const [PopMenu()],
-      ),
-      body: SingleChildScrollView(
-        child: home(),
-      ),
-      drawer: MyDrawer(),
-    );
-  }
-
-  Center home() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
