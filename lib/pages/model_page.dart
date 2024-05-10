@@ -1,10 +1,16 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dart:developer' as devtools;
 
 import 'package:skin_diseases_detection_system/services/user_data_service.dart';
+
+import '../services/auth/auth_service.dart';
 
 class ModelPage extends StatefulWidget {
   const ModelPage({super.key});
@@ -17,6 +23,8 @@ class _ModelPageState extends State<ModelPage> {
   File? filePath;
   String label = '';
   double confidence = 0.0;
+  late User _user;
+  final _auth = AuthService();
 
   Future<void> _tfLteInit() async {
     // ignore: unused_local_variable
@@ -33,6 +41,14 @@ class _ModelPageState extends State<ModelPage> {
   }
 
   recognition() {}
+
+  @override
+  void initState() {
+    //
+    super.initState();
+    _tfLteInit();
+    _user = _auth.getCurrentUser()!;
+  }
 
   pickImageGallery() async {
     final ImagePicker picker = ImagePicker();
@@ -71,6 +87,7 @@ class _ModelPageState extends State<ModelPage> {
       label = recognitions[0]['label'].toString();
       UserDataService(confidence: confidence, label: label).saveUserData();
     });
+    await _uploadImageToFirebaseStorage();
   }
 
   pickImageCamera() async {
@@ -110,6 +127,27 @@ class _ModelPageState extends State<ModelPage> {
       label = recognitions[0]['label'].toString();
       UserDataService(confidence: confidence, label: label).saveUserData();
     });
+
+    await _uploadImageToFirebaseStorage();
+  }
+
+  Future<void> _uploadImageToFirebaseStorage() async {
+    if (filePath == null) return;
+
+    // Upload the image to Firebase Storage
+    final Reference storageRef = FirebaseStorage.instance
+        .ref()
+        .child('userInfo')
+        .child(_user.uid)
+        .child('user_disease.jpg');
+    final UploadTask uploadTask = storageRef.putFile(filePath!);
+
+    // Await the completion of the upload task
+    await uploadTask.whenComplete(() => print('Image uploaded'));
+
+    // Optionally, you can get the download URL of the uploaded image
+    final String downloadUrl = await storageRef.getDownloadURL();
+    print('Download URL: $downloadUrl');
   }
 
   @override
@@ -117,13 +155,6 @@ class _ModelPageState extends State<ModelPage> {
     //
     super.dispose();
     Tflite.close();
-  }
-
-  @override
-  void initState() {
-    //
-    super.initState();
-    _tfLteInit();
   }
 
   @override
@@ -140,7 +171,7 @@ class _ModelPageState extends State<ModelPage> {
             elevation: 20,
             clipBehavior: Clip.hardEdge,
             child: SizedBox(
-              width: 300,
+              width: 330,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -177,13 +208,27 @@ class _ModelPageState extends State<ModelPage> {
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                           const SizedBox(
                             height: 12,
                           ),
-                          Text(
-                            "The Accuracy is ${confidence.toStringAsFixed(0)}%",
-                            style: const TextStyle(
+                          LinearPercentIndicator(
+                            backgroundColor: CupertinoColors.systemGrey4,
+                            lineHeight: 30,
+                            percent: confidence / 100,
+                            animation: true,
+                            animationDuration: 700,
+                            barRadius: const Radius.circular(7),
+                            progressColor: CupertinoColors.systemGrey2,
+                            center: Text("${confidence.toStringAsFixed(0)}%"),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          const Text(
+                            "Accuracy",
+                            style: TextStyle(
                               fontSize: 18,
                             ),
                           ),
@@ -199,43 +244,70 @@ class _ModelPageState extends State<ModelPage> {
             ),
           ),
           const SizedBox(
-            height: 8,
+            height: 20,
           ),
-          ElevatedButton(
-            onPressed: () {
-              pickImageCamera();
-            },
-            style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(13),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  pickImageCamera();
+                },
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 35, vertical: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    foregroundColor: Colors.black),
+                child: const Text(
+                  "Open Camera",
                 ),
-                foregroundColor: Colors.black),
-            child: const Text(
-              "Take a Photo",
-            ),
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  pickImageGallery();
+                },
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    foregroundColor: Colors.black),
+                child: const Text(
+                  "Pick From Gallery",
+                ),
+              ),
+            ],
           ),
           const SizedBox(
-            height: 8,
+            height: 50,
           ),
           ElevatedButton(
-            onPressed: () {
-              pickImageGallery();
+            onPressed: () async {
+
             },
             style: ElevatedButton.styleFrom(
+                splashFactory: InkSparkle.splashFactory,
+                backgroundColor: CupertinoColors.opaqueSeparator,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(13),
                 ),
                 foregroundColor: Colors.black),
             child: const Text(
-              "Pick from gallery",
+              "View more info.",
             ),
           ),
         ],
       ),
     );
   }
+
+
 }

@@ -15,7 +15,7 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Profile"),
+        title: const Text("Profile Info"),
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.grey,
         elevation: 0,

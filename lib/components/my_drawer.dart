@@ -21,7 +21,6 @@ class MyDrawer extends StatelessWidget {
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.background,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(children: [
             const DrawerHeader(
@@ -74,21 +73,6 @@ class MyDrawer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 25.0),
               child: ListTile(
-                  title: const Text("S E T T I N G S"),
-                  leading: const Icon(Icons.settings),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SettingsPage(),
-                      ),
-                    );
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 25.0),
-              child: ListTile(
                   title: const Text("C H A T"),
                   leading: const Icon(Icons.chat),
                   onTap: () {
@@ -97,6 +81,21 @@ class MyDrawer extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => HomePage(),
+                      ),
+                    );
+                  }),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25.0),
+              child: ListTile(
+                  title: const Text("S E T T I N G S"),
+                  leading: const Icon(Icons.settings),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingsPage(),
                       ),
                     );
                   }),

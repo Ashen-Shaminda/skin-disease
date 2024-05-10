@@ -73,17 +73,21 @@ class AuthService {
 
       // Extract the UID from the UserCredential
       String uid = userCredential.user!.uid;
+      String? _userName = userCredential.user!.displayName;
 
       _firestore.collection('roles').doc(uid).set({
         'uid': uid,
+        'name': _userName,
         'email': googleUser.email,
         'time': timeStamp,
       });
 
-      _firestore.collection('Users').doc(uid).set(
-          {'uid': userCredential.user!.uid, 'email': googleUser.email, 'time': timeStamp});
-
-      print(googleUser.email);
+      _firestore.collection('Users').doc(uid).set({
+        'uid': userCredential.user!.uid,
+        'name': _userName,
+        'email': googleUser.email,
+        'time': timeStamp
+      });
 
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {

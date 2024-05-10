@@ -82,6 +82,24 @@ class LoginPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(
+              "Not a member?",
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            ),
+            GestureDetector(
+              onTap: onTap,
+              child: Text(
+                " Register.",
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ]),
+          const SizedBox(
+            height: 20,
+          ),
           Divider(
             thickness: 0.5,
             indent: 50,
@@ -111,21 +129,7 @@ class LoginPage extends StatelessWidget {
           ),
           // ignore: duplicate_ignore
           // ignore: prefer_const_constructors
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(
-              "Not a member?",
-              style: TextStyle(color: Theme.of(context).colorScheme.primary),
-            ),
-            GestureDetector(
-              onTap: onTap,
-              child: Text(
-                " Register.",
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ]),
+
         ]),
       ),
     );

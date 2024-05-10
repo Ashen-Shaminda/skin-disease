@@ -4,9 +4,14 @@ import 'package:skin_diseases_detection_system/home.dart';
 
 import 'login_register.dart';
 
-class AuthGate extends StatelessWidget {
+class AuthGate extends StatefulWidget {
   const AuthGate({super.key});
 
+  @override
+  State<AuthGate> createState() => _AuthGateState();
+}
+
+class _AuthGateState extends State<AuthGate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -14,7 +14,6 @@ class CurrentUser extends StatefulWidget {
 class _CurrentUserState extends State<CurrentUser> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String _userName = '';
-  String _userEmail = '';
   late User _user;
   final _auth = AuthService();
   Map<String, dynamic>? _userData;
@@ -26,7 +25,6 @@ class _CurrentUserState extends State<CurrentUser> {
       if (userDoc.exists) {
         setState(() {
           _userName = userDoc['name'];
-          _userEmail = userDoc['email'];
         });
       } else {
         print('Roles document does not exist');
