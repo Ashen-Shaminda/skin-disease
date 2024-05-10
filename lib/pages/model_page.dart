@@ -9,6 +9,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dart:developer' as devtools;
 
 import 'package:skin_diseases_detection_system/services/user_data_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../services/auth/auth_service.dart';
 
@@ -289,7 +290,10 @@ class _ModelPageState extends State<ModelPage> {
           ),
           ElevatedButton(
             onPressed: () async {
-
+              var url = Uri.https('www.google.com', 'search',{'q': '$label skin'});
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url);
+              }
             },
             style: ElevatedButton.styleFrom(
                 splashFactory: InkSparkle.splashFactory,
@@ -308,6 +312,4 @@ class _ModelPageState extends State<ModelPage> {
       ),
     );
   }
-
-
 }
