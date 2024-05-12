@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.grey,
           elevation: 0,
-          actions: const [PopMenu()],
+          // actions: const [PopMenu()],
         ),
         body: SingleChildScrollView(
           child: _userRole == 'user' ? const ModelPage() : const DoctorPage(),
