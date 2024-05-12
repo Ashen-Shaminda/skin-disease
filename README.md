@@ -21,7 +21,7 @@
    * Emulator/Simulator: If you're using an emulator or simulator, make sure it's set up and running. You can start one from Android Studio, Visual Studio Code, or using the command line.
 
 6. **Run the App**: Once your device or emulator is connected, you can run your Flutter app by executing the following command in the terminal:<br>
-   ```flutter run```
+   ```flutter run``` (before running the ```flutter run``` command ```flutter pub get```)
   This command will compile your Flutter app and deploy it to the connected device or emulator.
    
 7. **View the App:** After running the app, it will be displayed on your device or emulator. You can interact with it just like any other app.
